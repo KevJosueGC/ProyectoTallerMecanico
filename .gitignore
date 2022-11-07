@@ -1,0 +1,11 @@
+/bin/
+/obj/
+/Properties/
+appsettings.Development
+appsettings
+Program.cs
+*.csproj
+*.csproj.user
+/.vs/
+/.git/
+
