@@ -9,3 +9,7 @@ Program.cs
 /.vs/
 /.git/
 
+obj/project.assets.json
+obj/project.nuget.cache
+obj/SistemaTallerMecanico.csproj.nuget.dgspec.json
+obj/SistemaTallerMecanico.csproj.nuget.g.props
