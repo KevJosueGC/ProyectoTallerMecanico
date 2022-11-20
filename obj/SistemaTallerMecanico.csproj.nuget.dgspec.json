@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kvgca\\Desktop\\SistemaTallerMecanico\\SistemaTallerMecanico.csproj": {}
+    "C:\\Users\\kvgca\\Documents\\SistemaTaller\\ProyectoTallerMecanico\\SistemaTallerMecanico.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kvgca\\Desktop\\SistemaTallerMecanico\\SistemaTallerMecanico.csproj": {
+    "C:\\Users\\kvgca\\Documents\\SistemaTaller\\ProyectoTallerMecanico\\SistemaTallerMecanico.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kvgca\\Desktop\\SistemaTallerMecanico\\SistemaTallerMecanico.csproj",
+        "projectUniqueName": "C:\\Users\\kvgca\\Documents\\SistemaTaller\\ProyectoTallerMecanico\\SistemaTallerMecanico.csproj",
         "projectName": "SistemaTallerMecanico",
-        "projectPath": "C:\\Users\\kvgca\\Desktop\\SistemaTallerMecanico\\SistemaTallerMecanico.csproj",
+        "projectPath": "C:\\Users\\kvgca\\Documents\\SistemaTaller\\ProyectoTallerMecanico\\SistemaTallerMecanico.csproj",
         "packagesPath": "C:\\Users\\kvgca\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kvgca\\Desktop\\SistemaTallerMecanico\\obj\\",
+        "outputPath": "C:\\Users\\kvgca\\Documents\\SistemaTaller\\ProyectoTallerMecanico\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\kvgca\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -39,6 +39,20 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -58,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }
