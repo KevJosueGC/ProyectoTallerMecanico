@@ -1,0 +1,49 @@
+﻿@model SistemaTallerMecanico.Models.Empleado
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ["Title"] = "Empleados"
+}
+
+<!--Index EMPLEADO-->
+<h1>Administración de Empleados</h1>
+<!--Se agrega una lista formateado en tabla
+    Cada item de tabla tendra 2 acciones en la columna final que seran
+    * Editar    : Se mostrara un modal con un nuevo formulario donde se mostrara el registro a editar.
+    * Eliminar  : Se mostrara un mensaje de confirmacion para eliminar logicamente en la base de datos el registro.
+-->
+
+@if(Model.Any()){
+    // Verificare que el modal tenga datos.
+    <h2>Lista de Empleados Registrados</h2>
+    <table>
+        <thead>Lista de Empleados</thead>
+        <tbody>
+            <tr>
+                <td>Nombre</td>
+                <td>Direccion</td>
+                <td>Telefono</td>
+                <td>Sueldo</td>
+                <td>Acciones</td>
+            </tr>
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Nombre</td>
+                    <td>@item.Direccion</td>
+                    <td>@item.Telefono</td>
+                    <td>@item.Sueldo</td>
+                    <td>
+                        <a asp-controller="Empleado" asp-action="Edit">Editar</a>
+                        <a asp-controller="Empleado" asp-action="Delete">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>Lista de Empleados</tfoot>
+    </table>
+}else{
+    <h2>Actualmente no hay datos de empleado.</h2>
+}
