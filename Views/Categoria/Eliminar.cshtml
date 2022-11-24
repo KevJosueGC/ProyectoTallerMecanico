@@ -1,0 +1,25 @@
+@model ProyectoTallerMecanico.Models.Categoria
+
+<div class="row">
+    <div class="col s12 m6">
+        <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">¿Estás seguro de eliminar el siguiente registro?</span>
+                <dt>
+                    @Html.DisplayNameFor(modelo => modelo.Nombre)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(modelo => modelo.Nombre)
+                </dd>
+            </div>
+            <div class="card-action">
+                <form asp-action="Eliminar">
+                    <input type="hidden" asp-for="IdCategoria" />
+                    <input type="submit" value="Eliminar" class="waves-effect waves-light btn-small orange lighten-1" />
+                    <a asp-action="Index" class="right">Volver</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

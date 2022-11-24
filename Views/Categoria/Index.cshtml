@@ -1,0 +1,44 @@
+@model IEnumerable<ProyectoTallerMecanico.Models.Categoria>
+
+<div>
+    <h3 class="center-align">CATEGORIAS</h3>
+</div>
+
+<table class="responsive-table highlight z-depth-3 grey lighten-3">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th class="center-align">
+                @Html.DisplayNameFor(model => model.Estatus)
+            </th>
+            <th class="center-align">
+                Accion
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Descripcion)
+                </td>
+                <td class="center-align">
+                    @Html.DisplayFor(model => item.Estatus)
+                </td>
+                <td class="center-align">
+                    <a asp-action="Editar" asp-route-id="@item.IdCategoria"><i class="material-icons green-text">edit_document</i></a> |
+                    <a asp-action="Eliminar" asp-route-id="@item.IdCategoria"><i class="material-icons red-text">delete_forever</i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

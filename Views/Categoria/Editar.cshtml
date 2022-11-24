@@ -1,0 +1,43 @@
+@model ProyectoTallerMecanico.Models.Categoria
+
+<h4>ACTUALIZAR CATEGORIA</h4>
+
+<div>
+    <div class="row centered">
+        <form class="col s12" asp-action="Editar">
+            <div asp-validation-summary="ModelOnly"></div>
+            <input type="hidden" asp-for="IdCategoria">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input asp-for="Nombre" placeholder="Placeholder" type="text" class="validate">
+                    <label asp-for="Nombre"></label>
+                    <span asp-validation-for="Nombre"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input asp-for="Descripcion" placeholder="Placeholder" type="text" class="validate">
+                    <label asp-for="Descripcion"></label>
+                    <span asp-validation-for="Descripcion"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input asp-for="Estatus" placeholder="Placeholder" type="text" class="validate">
+                    <label asp-for="Estatus"></label>
+                    <span asp-validation-for="Estatus"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Actualizar
+                        <i class="material-icons right">edit</i>
+                    </button>
+                    <a class="btn waves-effect waves-light red darken-2" asp-action="Index">Volver
+                        <i class="material-icons right">undo</i>
+                    </a>                    
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
