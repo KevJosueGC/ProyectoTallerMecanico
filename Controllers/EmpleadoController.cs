@@ -1,14 +1,22 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProyectoTallerMecanico.Models;
 
-namespace SistemaTallerMecanico.Controllers
+namespace ProyectoTallerMecanico.Controllers
 {
     public class EmpleadoController : Controller
     {
+        // Realizar conexion a base de datos.
+        private readonly TallerContext dbConnection;
+
+        public EmpleadoController(TallerContext conexion)
+        {
+            this.dbConnection = conexion;
+        }
         // GET: EmpleadoController
         public ActionResult Index()
-        {
-            return View();
+        { 
+            return View(dbConnection.Empleado.ToList());
         }
 
         // GET: EmpleadoController/Details/5
@@ -20,7 +28,8 @@ namespace SistemaTallerMecanico.Controllers
         // GET: EmpleadoController/Create
         public ActionResult Create()
         {
-            return View();
+            Empleado nEmpleado = new Empleado();
+            return PartialView("_PartialViewCrearEmpleado",nEmpleado);
         }
 
         // POST: EmpleadoController/Create

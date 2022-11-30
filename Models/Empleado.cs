@@ -14,5 +14,7 @@ namespace ProyectoTallerMecanico.Models
         public List<Usuario> Usuarios { get; set; }
         public List<Orden> Ordenes { get; set; }
 
+        // 1 para indicar que el estatus es ACTIVO
+        public Empleado() => this.Estatus = 1;
     }
 }
