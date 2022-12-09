@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<ProyectoTallerMecanico.Models.Empleado>
-@using ProyectoTallerMecanico.Models
+@using ProyectoTallerMecanico.Models;
+
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 	ViewData["Title"] = "Empleados";
 }
-<div id="PlaceHolderHere"></div>
 <!--Index EMPLEADO-->
 <div style="width:100%;align-items:center">
 	<h1 style="text-align:center">Administración de Empleados</h1>
@@ -16,13 +16,12 @@
 	* Editar    : Se mostrara un modal con un nuevo formulario donde se mostrara el registro a editar.
 	* Eliminar  : Se mostrara un mensaje de confirmacion para eliminar logicamente en la base de datos el registro.
 -->
+
 <div class="row">
-	<div class="col s3 m2">
-		<h2>Lista de Empleados Registrados</h2>
-	</div>
-	<div class="col s2 m1 right-align">
+	<div class="col s3"></div>
+	<div class="col s4 m4 right-align">
 		<i class="material-icons red">add_box</i>
-		<button type="button" class="btn btn-primary red" data-toggle="modalEmpleado" data-target="#crudEmpleado" data-url="@Url.Action("Create")">
+		<button data-target="modalAgregar" class="btn modal-trigger" onclick="btnAgregar()">
 			Crear Nuevo Empleado
 		</button>
 	</div>
@@ -31,8 +30,8 @@
 {
 	int validos = 0;
 	// Verificare que el modal tenga datos.
-	<table>
-		<thead>Lista de Empleados</thead>
+	<table class="striped highlight responsive-table">
+		<thead>Lista de Empleados Registrados</thead>
 		<tbody>
 			<tr>
 				<td>Nombre</td>
@@ -41,23 +40,25 @@
 				<td>Sueldo</td>
 				<td>Acciones</td>
 			</tr>
-			foreach (var item in Model)
+			@foreach (var item in Model)
 			{
-			if(item.Estatus == 1){
-			validos++;
-			<tr>
-				<td>item.Nombre</td>
-				<td>item.Direccion</td>
-				<td>item.Telefono</td>
-				<td>item.Sueldo</td>
-				<td>
-					<a asp-controller="Empleado" asp-action="Edit">Editar</a>
-					<a asp-controller="Empleado" asp-action="Delete">Eliminar</a>
-				</td>
-			</tr>
+				if (item.Estatus == 1)
+				{
+					validos++;
+					<tr>
+						<td>@item.Nombre</td>
+						<td>@item.Direccion</td>
+						<td>@item.Telefono</td>
+						<td>@item.Sueldo</td>
+						<td>
+							<button data-target="modalEditar" class="btn modal-trigger" onclick="btnEditar('@item.Nombre',@item.IdEmpleado)"><i class="material-icons">edit</i> Editar</button>
+							<button data-target="modalEliminar" class="btn btn-flat red modal-trigger" onclick="btnEliminar('@item.Nombre',@item.IdEmpleado)"><i class="material-icons">delete_forever</i> Eliminar</button>
+						</td>
+					</tr>
+				}
 			}
-			}
-			if(validos == 0){
+			@if (validos == 0)
+			{
 				<tr>
 					<td colspan="5">Actualmente no hay empleados activos.</td>
 				</tr>
@@ -69,4 +70,156 @@
 else
 {
 	<h2>Actualmente no hay datos de empleado.</h2>
+}
+
+<!--
+	Modal para AGREGAR
+-->
+<div id="modalAgregar" class="modal">
+	<div class="modal-content">
+		<h3>Agregar nuevo empleado</h3>
+		<div id="formAgregar"></div>
+	</div>
+	<div class="modal-footer">
+		<a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancelar</a>
+		<a href="#!" class="modal-close waves-effect waves-green btn" id="confirmGuardar">Guardar</a>
+	</div>
+</div>
+
+<!--
+	Modal para EDITAR
+-->
+<div id="modalEditar" class="modal">
+	<div class="modal-content">
+		<h3>Editar empleado: <span id="nombreEmpleado"></span></h3>
+		<div id="getFormEditar"></div>
+	</div>
+	<div class="modal-footer">
+		<a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancelar</a>
+		<a href="#!" class="modal-close waves-effect waves-green btn" id="confirmEditar">Guardar Cambios</a>
+	</div>
+</div>
+
+<!--
+	Modal para ELIMINAR
+-->
+<div id="modalEliminar" class="modal">
+	<div class="modal-content">
+		<div class="card">
+			<div class="card-content">
+				<div class="card-title text-darken-4">
+					<h3>¿Eliminar registro de <span id="delNombreEmpleado"></span>?</h3>
+				</div>
+				<p>Esta acción eliminará la información del empleado.</p>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<a href="#!" class="modal-close waves-effect waves-red btn">Cancelar</a>
+		<a href="#!" class="waves-effect waves-red btn btn-block" id="confirmEliminar">Eliminar</a>
+	</div>
+</div>
+
+@section Scripts{
+	<script>
+		/*
+			Funciones para el manejo de empleados
+		*/
+		document.getElementById("confirmGuardar").addEventListener('click', () => {
+			Agregar();
+		});
+
+		document.getElementById("confirmEditar").addEventListener('click', () => {
+			Editar();
+		})
+
+		document.getElementById("confirmEliminar").addEventListener('click', () => {
+			Eliminar();
+		})
+
+		// FUNCION DE AGREGAR EMPLEADO.
+		var btnAgregar = function () {
+			let url = 'Empleado/Create';
+			// Agregar vista parcial de formulario.
+			$("#formAgregar").load(url, function () {
+				$("#modalAgregar").modal({
+					dismissible: false
+				});
+				$("#modalAgregar").modal('open');
+				M.updateTextFields();
+			});
+		}
+		var Agregar = function () {
+			var dataFormulario = $('#formAgregarEmpleado').serialize();
+			$.ajax({
+				type: "POST",
+				url: "Empleado/Create",
+				data: dataFormulario
+			})
+				.done(function (data) {
+					var notif = '<span>Empleado agregado.</span>';
+					M.toast({ html: notif });
+				})
+				.fail(function (data) {
+					var notiFail = '<span>Ocurrió un error al agregar empleado.</span>';
+					M.toast({ html: notiFail });
+				})
+		}
+		// FUNCION DE EDITAR EMPLEADO.
+		var btnEditar = function (nombre, id) {
+			let url = 'Empleado/Edit/' + id;
+			$("#nombreEmpleado").html(nombre);
+			// Agregar vista parcial de formulario.
+			$("#getFormEditar").load(url, function () {
+				$("#modalEditar").modal({
+					dismissible: false
+				});
+				$("#modalEditar").modal('open');
+			});
+		}
+		var Editar = function () {
+			var dataFormulario = $('#formEditar').serialize();
+			$.ajax({
+				type: "POST",
+				url: "Empleado/Edit",
+				data: dataFormulario
+			})
+				.done(function (data) {
+					var notif = '<span>Información de Empleado Actualizado</span>';
+					M.toast({ html: notif });
+				})
+				.fail(function (data) {
+					var notif = '<span>Ocurrió un error al actualizar.</span>';
+					M.toast({ html: notif });
+				})
+		}
+		// FUNCION DE ELIMINAR EMPLEADO.
+		let idDelete = 0;
+		var btnEliminar = function (nombre, id) {
+			idDelete = id;
+			let url = 'Empleado/Delete/${id}';
+			console.log("nombre:" + nombre);
+			$("#delNombreEmpleado").html(nombre);
+			$("#modalEliminar").modal({
+				dismissible: false
+			});
+			$("#modalEliminar").modal('open');
+		}
+		var Eliminar = function () {
+			$.ajax({
+				type: "POST",
+				url: "Empleado/Delete",
+				data: { id: idDelete }
+			})
+				.done(function (data) {
+					var notif = '<span>Registro de empleado eliminado.</span>';
+					M.toast({ html: notif });
+					$("#modalEliminar").modal('close');
+				})
+				.fail(function (data) {
+					var notif = '<span>Ocurrió un problema al eliminar registro de empleado.</span>';
+					M.toast({ html: notif });
+				})
+		}
+	</script>
 }

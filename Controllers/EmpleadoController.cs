@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using ProyectoTallerMecanico.Models;
 
 namespace ProyectoTallerMecanico.Controllers
@@ -29,64 +31,61 @@ namespace ProyectoTallerMecanico.Controllers
         public ActionResult Create()
         {
             Empleado nEmpleado = new Empleado();
-            return PartialView("_PartialViewCrearEmpleado",nEmpleado);
+            return PartialView("_PartialViewCrearEmpleado", nEmpleado);
         }
 
         // POST: EmpleadoController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Empleado nuevoEmpleado)
         {
-            try
+            if (ModelState.IsValid)
+            {
+                dbConnection.Add(nuevoEmpleado);
+                dbConnection.SaveChanges();
+            }
+			return PartialView("_PartialViewCrearEmpleado", nuevoEmpleado);
+			/*try
             {
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
                 return View();
-            }
-        }
+            }*/
+		}
 
         // GET: EmpleadoController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Empleado empleado = dbConnection.Empleado.FirstOrDefault(e => e.IdEmpleado == id);
+            return PartialView("_PartialViewEditarEmpleado", empleado);
         }
 
         // POST: EmpleadoController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Empleado editEmpleado)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                dbConnection.Update(editEmpleado); 
+                dbConnection.SaveChanges();
             }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: EmpleadoController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
+            return PartialView("_PartialViewEditarEmpleado", editEmpleado);
         }
 
         // POST: EmpleadoController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
+            var empleado = dbConnection.Empleado.FirstOrDefault(e =>e.IdEmpleado == id);
+            if (empleado != null)
             {
-                return RedirectToAction(nameof(Index));
+                empleado.Estatus= 0;
+                dbConnection.Update(empleado);
+                dbConnection.SaveChanges();
             }
-            catch
-            {
-                return View();
-            }
+
+            return RedirectToAction("Index");
         }
     }
 }

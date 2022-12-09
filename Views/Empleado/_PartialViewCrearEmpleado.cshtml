@@ -1,24 +1,24 @@
 ﻿@model ProyectoTallerMecanico.Models.Empleado
 
 <div class="row">
-	<form method="post" asp-controller="Empleado" asp-action="Create" class="col s12">
-		<div class="input-field col s6">
-			<i class="material-icons">account-circle</i>
+	<form class="col s12" id="formAgregarEmpleado">
+		<div class="input-field col s7">
+			<i class="material-icons prefix">account-circle</i>
 			<label asp-for="Nombre"></label>
-			<input type="text" asp-for="Nombre" placeholder="Ingrese nombre de Empleado" class="validate"/>
+			<input type="text" asp-for="Nombre" class="validate" />
 		</div>
-		<div class="input-field col s6">
-			<i class="material-icons">directions</i>
+		<div class="input-field col s7">
+			<i class="material-icons prefix">directions</i>
 			<label asp-for="Direccion"></label>
-			<input type="text" asp-for="Direccion" class="validate"/>
+			<input type="text" asp-for="Direccion" class="validate" />
 		</div>
-		<div class="input-field col s6">
-			<i class="material-icons">contact_phone</i>
+		<div class="input-field col s7">
+			<i class="material-icons prefix">contact_phone</i>
 			<label asp-for="Telefono"></label>
-			<input asp-for="Telefono"/>
+			<input asp-for="Telefono" />
 		</div>
-		<div class="input-field col s6">
-			<i class="material-icons">attach_money</i>
+		<div class="input-field col s7">
+			<i class="material-icons prefix">attach_money</i>
 			<label asp-for="Sueldo"></label>
 			<input asp-for="Sueldo" />
 		</div>
