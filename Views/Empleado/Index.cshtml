@@ -26,51 +26,58 @@
 		</button>
 	</div>
 </div>
-@if (Model.Any())
-{
-	int validos = 0;
-	// Verificare que el modal tenga datos.
-	<table class="striped highlight responsive-table">
-		<thead>Lista de Empleados Registrados</thead>
-		<tbody>
-			<tr>
-				<td>Nombre</td>
-				<td>Direccion</td>
-				<td>Telefono</td>
-				<td>Sueldo</td>
-				<td>Acciones</td>
-			</tr>
-			@foreach (var item in Model)
-			{
-				if (item.Estatus == 1)
-				{
-					validos++;
-					<tr>
-						<td>@item.Nombre</td>
-						<td>@item.Direccion</td>
-						<td>@item.Telefono</td>
-						<td>@item.Sueldo</td>
-						<td>
-							<button data-target="modalEditar" class="btn modal-trigger" onclick="btnEditar('@item.Nombre',@item.IdEmpleado)"><i class="material-icons">edit</i> Editar</button>
-							<button data-target="modalEliminar" class="btn btn-flat red modal-trigger" onclick="btnEliminar('@item.Nombre',@item.IdEmpleado)"><i class="material-icons">delete_forever</i> Eliminar</button>
-						</td>
-					</tr>
-				}
-			}
-			@if (validos == 0)
-			{
+<div class="row">
+	<div class="card">
+		<div class="card-content">
+			<h2 class="center">Listado de empleados activos.</h2>
+		</div>
+	</div>
+</div>
+<div class="row">
+	@if (Model.Any())
+	{
+		int validos = 0;
+		// Verificare que el modal tenga datos.
+		<table class="dt-body-left" id="tablaEmpleado">
+			<thead>
 				<tr>
-					<td colspan="5">Actualmente no hay empleados activos.</td>
+					<td class="dt-head-center">Nombre</td>
+					<td>Direccion</td>
+					<td>Telefono</td>
+					<td>Sueldo</td>
+					<td>Acciones</td>
 				</tr>
-			}
-		</tbody>
-		<tfoot>Lista de Empleados</tfoot>
-	</table>
-}
-else
-{
-	<h2>Actualmente no hay datos de empleado.</h2>
-}
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+					if (item.Estatus == 1)
+					{
+						validos++;
+						<tr>
+							<td>@item.Nombre</td>
+							<td>@item.Direccion</td>
+							<td>@item.Telefono</td>
+							<td>@item.Sueldo</td>
+							<td>
+								<button data-target="modalEditar" class="btn modal-trigger" onclick="btnEditar('@item.Nombre',@item.IdEmpleado)"><i class="material-icons">edit</i> Editar</button>
+								<button data-target="modalEliminar" class="btn btn-flat red modal-trigger" onclick="btnEliminar('@item.Nombre',@item.IdEmpleado)"><i class="material-icons">delete_forever</i> Eliminar</button>
+							</td>
+						</tr>
+					}
+				}
+			</tbody>
+		</table>
+		if (validos == 0)
+		{
+			<h2>Actualmente no hay empleados activos.</h2>
+		}
+	}
+	else
+	{
+		<h2>Actualmente no hay datos de empleado.</h2>
+	}
+</div>
 
 <!--
 	Modal para AGREGAR
@@ -221,5 +228,14 @@ else
 					M.toast({ html: notif });
 				})
 		}
+
+		// FUNCION DE TABLAS.
+		$(document).ready(function () {
+			$('#tablaEmpleado').DataTable({
+				search: {
+					return: true,
+				},
+			});
+		});
 	</script>
 }

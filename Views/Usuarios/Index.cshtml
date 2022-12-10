@@ -1,0 +1,75 @@
+﻿@model IEnumerable<ProyectoTallerMecanico.Models.Usuario>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEmpleado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Alias)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Role)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEmpleado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Alias)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estatus)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdUsuario">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdUsuario">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdUsuario">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+<!--
+    AREA DE MODALES
+-->
+<!--
+    modal para CREAR
+-->
+<div id="modalCrear" class="modal modal-fixed-footer">
+    <div class="modal-content">
+
+    </div>
+    <div class="modal-footer">
+
+    </div>
+</div>
